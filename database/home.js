@@ -34,6 +34,7 @@ class Home {
         depth,
         equipment_ru,
         equipment_uz,
+        ps.id status_id,
         ps.name_ru status_ru,
         ps.name_uz status_uz
       FROM
@@ -66,6 +67,7 @@ class Home {
       depth,
       equipment_ru,
       equipment_uz,
+      ps.id status_id,
       ps.name_ru status_ru,
       ps.name_uz status_uz
     FROM
@@ -97,6 +99,7 @@ class Home {
       depth,
       equipment_ru,
       equipment_uz,
+      ps.id status_id,
       ps.name_ru status_ru,
       ps.name_uz status_uz
     FROM
