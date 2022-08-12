@@ -9,7 +9,8 @@ dotenv.config({
 module.exports = {
 
   APP: {
-    PORT: process.env.APP_PORT,
+    // PORT: process.env.APP_PORT,
+    PORT: process.env.PORT,
     ENV: process.env.APP_ENV,
     SECRET: process.env.APP_SECRET,
     SESSION_TIMEOUT: process.env.SESSION_TIMEOUT,
