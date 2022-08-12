@@ -26,7 +26,7 @@ class Products {
         p.id,
         c.name_ru,
         c.name_uz,
-        CONCAT('http://', $1::VARCHAR, '/', p.image) AS image
+        CONCAT('https://', $1::VARCHAR, '/', p.image) AS image
       FROM
         products p
       JOIN
