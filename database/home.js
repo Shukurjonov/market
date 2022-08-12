@@ -21,7 +21,7 @@ class Home {
     const sql = `
       SELECT 
         p.id,
-        c.id,
+        c.category_id,
         c.name_ru category_name_uz,
         c.name_uz category_name_ru,
         CONCAT('http://', $1::VARCHAR, '/', p.image) AS image,
