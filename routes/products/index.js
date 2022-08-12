@@ -63,7 +63,7 @@ const createProduct = catchError(async (req, res, next) => {
   fs.writeFileSync(path.join(process.cwd(), 'uploads', foldername, filename), Buffer.from(value.productImage, 'base64'));
   let result = await Produts.createProduct([
     value.categoryId,
-    `http://${req.headers.host}/${foldername}/${filename}`,
+    `${foldername}/${filename}`,
     value.price,
     value.salePrice,
     value.quantity,
