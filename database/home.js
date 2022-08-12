@@ -10,7 +10,7 @@ class Home {
       FROM
         categories c
       WHERE
-        c.state = true
+        c.state = true; 
       `;
 
     const result = await database.query(sql);
@@ -21,6 +21,7 @@ class Home {
     const sql = `
       SELECT 
         p.id,
+        c.id,
         c.name_ru category_name_uz,
         c.name_uz category_name_ru,
         CONCAT('http://', $1::VARCHAR, '/', p.image) AS image,
@@ -52,6 +53,7 @@ class Home {
     const sql = `
     SELECT 
       p.id,
+      c.id,
       c.name_ru category_name_uz,
       c.name_uz category_name_ru,
       CONCAT('http://', $1::VARCHAR, '/', p.image) AS image,
@@ -155,6 +157,5 @@ class Home {
     return result.rows || [];
   }
 }
-
 
 module.exports = Home;
