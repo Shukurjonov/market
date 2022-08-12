@@ -8,7 +8,7 @@ class Products {
         p.id,
         c.name_ru,
         c.name_uz,
-        CONCAT('http://', $1::VARCHAR, '/', p.image) AS image
+        CONCAT('https://', $1::VARCHAR, '/', p.image) AS image
       FROM
         products p
       JOIN
@@ -68,18 +68,18 @@ class Products {
   static async updateProduct(params) {
     const sql = `
       UPDATE products SET
-        category_id = $1,
-        image = $2,
-        price = $3,
-        sale_price = $4,
-        quantity = $5,
-        frame_ru = $6,
-        frame_uz = $7,
-        size = $8,
-        depth = $9,
-        equipment_ru = $10,
-        equipment_uz = $11,
-        status_id = $12
+        category_id = coalesce($1, category_id),
+        image = coalesce($2, image),
+        price = coalesce($3, price),
+        sale_price = coalesce($4, sale_price),
+        quantity = coalesce($5, quantity),
+        frame_ru = coalesce($6, frame_ru),
+        frame_uz = coalesce($7, frame_uz),
+        size = coalesce($8, size),
+        depth = coalecse($9, depth),
+        equipment_ru = coalesce($10, equipment_ru),
+        equipment_uz = coalesce($11, equipment_uz),
+        status_id = coalesce($12, status_id)
       WHERE id = $13
       RETURNING id, category_id, image, price;
   `;

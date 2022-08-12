@@ -108,7 +108,7 @@ const updateProduct = catchError(async (req, res, next) => {
 
   let result = await Produts.updateProduct([
     value.categoryId,
-    `http://${req.headers.host}/${foldername}/${filename}`,
+    `${foldername}/${filename}`,
     value.price,
     value.salePrice,
     value.quantity,
