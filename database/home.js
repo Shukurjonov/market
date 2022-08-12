@@ -40,7 +40,8 @@ class Home {
       FROM
         products p
       JOIN
-        categories c ON c.id = p.category_id
+        (SELECT category_id FROM categories WHERE state = true) c 
+          ON c.category_id = p.category_id
       JOIN 
         product_status ps ON ps.id = p.status_id  
       WHERE p.state = true;
