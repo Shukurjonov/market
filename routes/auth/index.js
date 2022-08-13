@@ -38,7 +38,6 @@ const login = catchError(async (req, res, next) => {
 
 })
 
-
 const register = catchError(async (req, res, next) => {
   const { error, value } = registerSchema.validate(req.body);
 
