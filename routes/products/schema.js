@@ -1,6 +1,6 @@
 const Joi = require('joi');
 
-const createProductOneSchema = Joi.object({
+const getProductOneSchema = Joi.object({
   productId: Joi.number().required()
 })
 
@@ -39,4 +39,4 @@ const deleteProductSchema = Joi.object({
   productId: Joi.number().required()
 })
 
-module.exports = { createProductOneSchema, createProductSchema, updateProductSchema, deleteProductSchema };
+module.exports = { getProductOneSchema, createProductSchema, updateProductSchema, deleteProductSchema };

@@ -6,8 +6,8 @@ const router = require('express').Router();
 
 const Produts = require('../../database/products');
 const {
+  getProductOneSchema,
   createProductSchema,
-  createProductOneSchema,
   updateProductSchema,
   deleteProductSchema
 } = require('./schema');
@@ -23,7 +23,7 @@ const getProducts = catchError(async (req, res, next) => {
 });
 
 const getProductOne = catchError(async (req, res, next) => {
-  const { error, value } = createProductOneSchema.validate(req.params);
+  const { error, value } = getProductOneSchema.validate(req.params);
 
   if (error) {
     return next({
@@ -41,6 +41,14 @@ const getProductOne = catchError(async (req, res, next) => {
 
   return res.status(200).send({
     message: 'Products retrieved',
+    data: result
+  })
+});
+
+const getProductStatus = catchError(async (req, res, next) => {
+  const result = await Produts.getProductStatus();
+  return res.status(200).send({
+    message: 'ProductStatus retrieved',
     data: result
   })
 });
@@ -99,25 +107,26 @@ const updateProduct = catchError(async (req, res, next) => {
     })
   }
 
-  value.productImage = value.productImage.replace('data:image/jpeg;base64,', '').replace('data:image/png;base64,', '');
-  const foldername = 'images'
-  const filename = `${uuidv4()}.jpg`;
-
-  fs.writeFileSync(path.join(process.cwd(), 'uploads', foldername, filename), Buffer.from(value.productImage, 'base64'));
+  if (value.productImage) {
+    value.productImage = value.productImage.replace('data:image/jpeg;base64,', '').replace('data:image/png;base64,', '');
+    const foldername = 'images'
+    const filename = `${uuidv4()}.jpg`;
+    fs.writeFileSync(path.join(process.cwd(), 'uploads', foldername, filename), Buffer.from(value.productImage, 'base64'));
+  }
 
   let result = await Produts.updateProduct([
-    value.categoryId || null,
+    value.categoryId,
     value.productImage ? `${foldername}/${filename}` : null,
-    value.price || null,
-    value.salePrice || null,
-    value.quantity || null,
-    value.frameRu || null,
-    value.frameUz || null,
-    value.size || null,
-    value.depth || null,
-    value.equipmentRu || null,
-    value.equipmentUz || null,
-    value.statusId || null,
+    value.price,
+    value.salePrice,
+    value.quantity,
+    value.frameRu,
+    value.frameUz,
+    value.size,
+    value.depth,
+    value.equipmentRu,
+    value.equipmentUz,
+    value.statusId,
     value.productId
   ]);
 
@@ -158,6 +167,7 @@ const deleteProduct = catchError(async (req, res, next) => {
 
 router.get('/', getProducts);
 router.get('/:productId', getProductOne);
+router.get('/status/info', getProductStatus);
 router.post('/', createProduct);
 router.put('/:productId', updateProduct);
 router.delete('/:productId', deleteProduct);

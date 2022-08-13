@@ -15,7 +15,7 @@ const authMiddleware = require('./middlewares/auth');
 const authRouter = require('./routes/auth');
 const homeRouter = require('./routes/home');
 const productsRouter = require('./routes/products');
-// const categoriesRouter = require('./routes/categories');
+const categoriesRouter = require('./routes/categories');
 // const ordersRouter = require('./routes/orders');
 // const consultationsRouter = require('./routes/consultations');
 
@@ -27,7 +27,10 @@ app.use(express.json({ limit: '10mb' }));
 app.use('/auth', authRouter);
 app.use('/api/home', homeRouter);
 app.use('/api/product', authMiddleware, productsRouter);
-// app.use('/api/category', categoriesRouter);
+app.use('/api/category', authMiddleware, categoriesRouter);
+// app.use('/api/order', authMiddleware, categoriesRouter);
+// app.use('/api/constultation', authMiddleware, categoriesRouter);
+// app.use('/api/constultation', authMiddleware, categoriesRouter);
 
 app.use(express.static(path.join(__dirname, 'uploads')));
 

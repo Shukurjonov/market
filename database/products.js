@@ -70,6 +70,19 @@ class Products {
     return result.rows || [];
   }
 
+  static async getProductStatus() {
+    const sql = `
+      SELECT 
+        id,
+        name_ru,
+        name_uz 
+      FROM 
+        product_status;
+    `;
+
+    const result = await database.query(sql);
+    return result.rows || [];
+  }
 
   static async createProduct(params) {
     const sql = `
@@ -108,7 +121,7 @@ class Products {
         frame_ru = coalesce($6, frame_ru),
         frame_uz = coalesce($7, frame_uz),
         size = coalesce($8, size),
-        depth = coalecse($9, depth),
+        depth = coalesce($9, depth),
         equipment_ru = coalesce($10, equipment_ru),
         equipment_uz = coalesce($11, equipment_uz),
         status_id = coalesce($12, status_id)

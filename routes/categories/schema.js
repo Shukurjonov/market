@@ -1,29 +1,27 @@
 const Joi = require('joi');
 
-const getProductFilterByCategorySchema = Joi.object({
+const getCategoryOneSchema = Joi.object({
   categoryId: Joi.number().required()
 })
 
-const getProductOneSchema = Joi.object({
-  productId: Joi.number().required()
+const createCategorySchema = Joi.object({
+  nameRu: Joi.string().min(0).max(20).required(),
+  nameUz: Joi.string().min(0).max(20).required(),
+  createdBy: Joi.number().required()
 })
 
-const createOrderSchema = Joi.object({
-  productId: Joi.number().required(),
-  name: Joi.string().min(0).max(30).required(),
-  phoneNumber: Joi.string().pattern(new RegExp('[(]?[0-9]{2}[)]?[ ]?[0-9]{3}[ ]?[-]?[0-9]{2}[ ]?[-]?[0-9]{2}')).required(),
-  address: Joi.string().min(0).max(150).required(),
-  location: Joi.string()
+const updateCategorySchema = Joi.object({
+  categoryId: Joi.number().required(),
+  nameRu: Joi.string().min(0).max(20),
+  nameUz: Joi.string().min(0).max(20),
+  updatedAt: Joi.date().required(),
+  updateBy: Joi.number().required()
 })
 
-const createConsultationSchema = Joi.object({
-  name: Joi.string().min(0).max(30).required(),
-  phoneNumber: Joi.string().pattern(new RegExp('[(]?[0-9]{2}[)]?[ ]?[0-9]{3}[ ]?[-]?[0-9]{2}[ ]?[-]?[0-9]{2}')).required()
+const deleteCategorySchema = Joi.object({
+  categoryId: Joi.number().required(),
+  updatedAt: Joi.date().required(),
+  updateBy: Joi.number().required()
 })
 
-module.exports = {
-  getProductFilterByCategorySchema,
-  getProductOneSchema,
-  createOrderSchema,
-  createConsultationSchema
-};
+module.exports = { getCategoryOneSchema, createCategorySchema, updateCategorySchema, deleteCategorySchema };
