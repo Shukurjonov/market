@@ -38,17 +38,33 @@ class Products {
 
   static async getProductOne(params) {
     const sql = `
-      SELECT 
-        p.id,
-        c.name_ru,
-        c.name_uz,
-        CONCAT('https://', $1::VARCHAR, '/', p.image) AS image
-      FROM
-        products p
-      JOIN
-        categories c ON c.id = p.category_id
-      WHERE p.id = $2 AND p.state = true;
-    `;
+    SELECT 
+      p.id,
+      c.category_id,
+      c.name_ru category_name_uz,
+      c.name_uz category_name_ru,
+      CONCAT('https://', $1::VARCHAR, '/', p.image) AS image,
+      price,
+      sale_price,
+      quantity,
+      frame_ru,
+      frame_uz,
+      size,
+      depth,
+      equipment_ru,
+      equipment_uz,
+      ps.id status_id,
+      ps.name_ru status_ru,
+      ps.name_uz status_uz
+    FROM
+      products p
+    JOIN
+      (SELECT id category_id, name_ru, name_uz FROM categories WHERE state = true) c 
+      ON c.category_id = p.category_id
+    JOIN 
+      product_status ps ON ps.id = p.status_id 
+        WHERE p.id = $2 AND p.state = true;
+      `;
 
     const result = await database.query(sql, params);
     return result.rows || [];
