@@ -43,6 +43,36 @@ class Categories {
     return result.rows || [];
   }
 
+  static async updateCategory(params) {
+    const sql = `
+      UPDATE categories
+      SET 
+        name_ru = coalesce($1, name_ru),
+        name_uz = coalesce($2, name_uz),
+        updated_at = coalesce($3, updated_at),
+        updated_by = coalesce($4, updated_by)
+      WHERE id = $5
+      RETURNING id;
+    `;
+
+    const result = await database.query(sql, params);
+    return result.rows || [];
+  }
+
+  static async deleteCategory(params) {
+    const sql = `
+      UPDATE categories
+      SET 
+        state = false,
+        updated_at = coalesce($1, updated_at),
+        updated_by = coalesce($2, updated_by)
+      WHERE id = $3
+      RETURNING id;
+    `;
+
+    const result = await database.query(sql, params);
+    return result.rows || [];
+  }
 }
 
 module.exports = Categories;
