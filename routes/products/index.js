@@ -106,18 +106,18 @@ const updateProduct = catchError(async (req, res, next) => {
   fs.writeFileSync(path.join(process.cwd(), 'uploads', foldername, filename), Buffer.from(value.productImage, 'base64'));
 
   let result = await Produts.updateProduct([
-    value.categoryId,
+    value.categoryId || null,
     value.productImage ? `${foldername}/${filename}` : null,
-    value.price,
-    value.salePrice,
-    value.quantity,
-    value.frameRu,
-    value.frameUz,
-    value.size,
-    value.depth,
-    value.equipmentRu,
-    value.equipmentUz,
-    value.statusId,
+    value.price || null,
+    value.salePrice || null,
+    value.quantity || null,
+    value.frameRu || null,
+    value.frameUz || null,
+    value.size || null,
+    value.depth || null,
+    value.equipmentRu || null,
+    value.equipmentUz || null,
+    value.statusId || null,
     value.productId
   ]);
 
