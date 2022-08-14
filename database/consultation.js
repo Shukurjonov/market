@@ -7,6 +7,7 @@ class Consultation {
         id consultation_id,
         name,
         phone_number,
+        time_consultation,
         status
       FROM
         consultations c
