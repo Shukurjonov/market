@@ -63,7 +63,7 @@ class Products {
       ON c.category_id = p.category_id
     JOIN 
       product_status ps ON ps.id = p.status_id 
-        WHERE p.id = $2 AND p.state = true;
+        WHERE p.id = $2 AND p.state = true
     ORDER BY p.id;
       `;
 
