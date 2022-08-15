@@ -21,7 +21,7 @@ class Home {
     const sql = `
       SELECT 
         p.id,
-        c.category_id,
+        c.id category_id,
         c.name_ru category_name_ru,
         c.name_uz category_name_uz,
         CONCAT('https://', $1::VARCHAR, '/', p.image) AS image,
@@ -39,9 +39,8 @@ class Home {
         ps.name_uz status_uz
       FROM
         products p
-      JOIN
-        (SELECT id category_id, name_ru, name_uz FROM categories WHERE state = true) c 
-          ON c.category_id = p.category_id
+      JOIN 
+        categories c ON c.id = p.category_id
       JOIN 
         product_status ps ON ps.id = p.status_id  
       WHERE p.state = true
