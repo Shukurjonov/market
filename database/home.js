@@ -22,8 +22,8 @@ class Home {
       SELECT 
         p.id,
         c.category_id,
-        c.name_ru category_name_uz,
-        c.name_uz category_name_ru,
+        c.name_ru category_name_ru,
+        c.name_uz category_name_uz,
         CONCAT('https://', $1::VARCHAR, '/', p.image) AS image,
         price,
         sale_price,
@@ -44,7 +44,8 @@ class Home {
           ON c.category_id = p.category_id
       JOIN 
         product_status ps ON ps.id = p.status_id  
-      WHERE p.state = true;
+      WHERE p.state = true
+      order by p.id;
     `;
 
     const result = await database.query(sql, params);
@@ -56,8 +57,8 @@ class Home {
     SELECT 
       p.id,
       c.id,
-      c.name_ru category_name_uz,
-      c.name_uz category_name_ru,
+      c.name_ru category_name_ru,
+      c.name_uz category_name_uz,
       CONCAT('https://', $1::VARCHAR, '/', p.image) AS image,
       price,
       sale_price,
@@ -77,7 +78,8 @@ class Home {
       categories c ON c.id = p.category_id
     JOIN 
       product_status ps ON ps.id = p.status_id  
-    WHERE p.state = true and p.category_id = $2::INTEGER;
+    WHERE p.state = true and p.category_id = $2::INTEGER
+    ORDER BY p.id;
   `;
 
     const result = await database.query(sql, params);
@@ -88,8 +90,8 @@ class Home {
     const sql = `
     SELECT 
       p.id,
-      c.name_ru category_name_uz,
-      c.name_uz category_name_ru,
+      c.name_ru category_name_ru,
+      c.name_uz category_name_uz,
       CONCAT('https://', $1::VARCHAR , '/', p.image) AS image,
       price,
       sale_price,
@@ -109,7 +111,8 @@ class Home {
       categories c ON c.id = p.category_id
     JOIN 
       product_status ps ON ps.id = p.status_id  
-    WHERE p.state = true and p.id = $2::INTEGER;
+    WHERE p.state = true and p.id = $2::INTEGER
+    ORDER BY p.id;
   `;
 
     const result = await database.query(sql, params);
