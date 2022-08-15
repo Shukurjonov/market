@@ -24,7 +24,6 @@ const getCategories = catchError(async (req, res, next) => {
 const getProducts = catchError(async (req, res, next) => {
   const result = await Home.getProducts([req.headers.host]);
 
-  console.log(result)
   if (result.length === 0) {
     return next({
       status: 404,

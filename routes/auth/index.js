@@ -60,7 +60,6 @@ const register = catchError(async (req, res, next) => {
 
 })
 
-
 router.post('/login', login);
 router.post('/register', register);
 
