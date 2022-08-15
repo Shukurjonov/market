@@ -18,6 +18,7 @@ const productsRouter = require('./routes/products');
 const categoriesRouter = require('./routes/categories');
 const consultationsRouter = require('./routes/consultations');
 const ordersRouter = require('./routes/orders');
+const siteRouter = require('./routes/site');
 
 app.use(cors());
 app.use(helmet());
@@ -29,6 +30,7 @@ app.use('/api/product', authMiddleware, productsRouter);
 app.use('/api/category', authMiddleware, categoriesRouter);
 app.use('/api/consultation', authMiddleware, consultationsRouter);
 app.use('/api/order', authMiddleware, ordersRouter);
+app.use('/api/site', authMiddleware, siteRouter);
 
 app.use(express.static(path.join(__dirname, 'uploads')));
 

@@ -64,6 +64,7 @@ class Products {
     JOIN 
       product_status ps ON ps.id = p.status_id 
         WHERE p.id = $2 AND p.state = true;
+    ORDER BY p.id;
       `;
 
     const result = await database.query(sql, params);

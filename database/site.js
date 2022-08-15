@@ -1,6 +1,25 @@
 const { database } = require('./connection');
 
 class Site {
+
+  static async getSite() {
+    const sql = `
+      SELECT 
+        phone_number,
+        address_ru,
+        address_uz,
+        work_time_ru,
+        work_time_uz,
+        telegram_link,
+        instagram_link
+      FROM
+        site
+      `;
+
+    const result = await database.query(sql);
+    return result.rows || [];
+  }
+
   static async updatePhoneNumber(params) {
     const sql = `
       UPDATE
@@ -18,7 +37,8 @@ class Site {
       UPDATE
         site
       SET
-        address = $1
+        address_ru = $1,
+        address_uz = $2
       RETURNING address;
     `;
     const result = await database.query(sql, params);
@@ -30,7 +50,8 @@ class Site {
       UPDATE
         site
       SET
-        work_time = $1
+        work_time_ru = $1
+        work_time_uz = $2
       RETURNING work_time;
     `;
     const result = await database.query(sql, params);
