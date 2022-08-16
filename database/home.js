@@ -10,7 +10,7 @@ class Home {
       FROM
         categories c
       WHERE
-        c.state = true; 
+        c.state = true
       ORDER BY c.id;
       `;
 

@@ -40,7 +40,13 @@ class Order {
     const sql = `
       UPDATE products
       SET
-        quantity = CASE WHEN $1::boolean THEN quantity - 1 ELSE quantity + 1 END
+        quantity = CASE WHEN $1::boolean THEN quantity - 1 ELSE quantity + 1 END,
+        status_id = 
+            CASE 
+              WHEN quantity = 0 THEN 3
+              WHEN quantity > 0 THEN 
+                  CASE WHEN status_id = 3 THEN 1 ELSE status_id END
+            END
       WHERE id = $2::int
       RETURNING id, quantity;
     `;
