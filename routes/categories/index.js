@@ -106,7 +106,6 @@ const updateCategory = catchError(async (req, res, next) => {
 
 const deleteCategory = catchError(async (req, res, next) => {
   const { error, value } = deleteCategorySchema.validate({ ...req.params, updatedAt: new Date(), updateBy: req.user.id });
-  console.log(value)
   if (error) {
     return next({
       status: 400,
@@ -121,8 +120,6 @@ const deleteCategory = catchError(async (req, res, next) => {
     })
   }
 
-  console.log(result[0]);
-
   const products = await Categories.deleteProduct([value.categoryId]);
   return res.status(200).send({
     message: 'Category dateleted',
@@ -132,7 +129,6 @@ const deleteCategory = catchError(async (req, res, next) => {
 
 const restoreCategory = catchError(async (req, res, next) => {
   const { error, value } = deleteCategorySchema.validate({ ...req.params, updatedAt: new Date(), updateBy: req.user.id });
-  console.log(value)
   if (error) {
     return next({
       status: 400,
