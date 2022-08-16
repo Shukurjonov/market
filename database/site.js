@@ -50,7 +50,7 @@ class Site {
       UPDATE
         site
       SET
-        work_time_ru = $1
+        work_time_ru = $1,
         work_time_uz = $2
       RETURNING work_time_ru, work_time_uz;
     `;
