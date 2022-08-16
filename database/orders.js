@@ -43,9 +43,9 @@ class Order {
         quantity = CASE WHEN $1::boolean THEN quantity - 1 ELSE quantity + 1 END,
         status_id = 
             CASE 
-              WHEN quantity = 0 THEN 3
-              WHEN quantity > 0 THEN 
-                  CASE WHEN status_id = 3 THEN 1 ELSE status_id END
+              WHEN $1::boolean THEN  
+                  CASE WHEN quantity = 1 THEN 3 ELSE COALESCE(status_id, 1) END
+              ELSE 1 
             END
       WHERE id = $2::int
       RETURNING id, quantity;
