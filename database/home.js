@@ -11,6 +11,7 @@ class Home {
         categories c
       WHERE
         c.state = true; 
+      ORDER BY c.id;
       `;
 
     const result = await database.query(sql);
@@ -144,7 +145,7 @@ class Home {
         phone_number,
         address,
         location ) VALUES ($1, $2, $3, $4, $5)
-      RETURNING id as order_id;
+      RETURNING id as order_id, product_id, name, phone_number;
     `;
 
     const result = await database.query(sql, params);
@@ -162,6 +163,8 @@ class Home {
     const result = await database.query(sql, params);
     return result.rows || [];
   }
+
+
 }
 
 module.exports = Home;

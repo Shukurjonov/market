@@ -6,7 +6,7 @@ class Products {
     const sql = `
     SELECT 
       p.id,
-      c.category_id,
+      c.id category_id,
       c.name_ru category_name_uz,
       c.name_uz category_name_ru,
       CONCAT('https://', $1::VARCHAR, '/', p.image) AS image,
@@ -25,11 +25,11 @@ class Products {
     FROM
       products p
     JOIN
-      (SELECT id category_id, name_ru, name_uz FROM categories WHERE state = true) c 
-        ON c.category_id = p.category_id
+      categories c ON c.id = p.category_id
     JOIN 
       product_status ps ON ps.id = p.status_id  
-    WHERE p.state = true;
+    WHERE p.state = true
+    ORDER BY p.id;
     `;
 
     const result = await database.query(sql, params);
@@ -40,7 +40,7 @@ class Products {
     const sql = `
     SELECT 
       p.id,
-      c.category_id,
+      c.id category_id,
       c.name_ru category_name_uz,
       c.name_uz category_name_ru,
       CONCAT('https://', $1::VARCHAR, '/', p.image) AS image,
@@ -59,13 +59,12 @@ class Products {
     FROM
       products p
     JOIN
-      (SELECT id category_id, name_ru, name_uz FROM categories WHERE state = true) c 
-      ON c.category_id = p.category_id
+      categories c ON c.id = p.category_id
     JOIN 
       product_status ps ON ps.id = p.status_id 
         WHERE p.id = $2 AND p.state = true
     ORDER BY p.id;
-      `;
+    `;
 
     const result = await database.query(sql, params);
     return result.rows || [];

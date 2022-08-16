@@ -29,9 +29,21 @@ class Order {
       UPDATE orders
       SET status = CASE WHEN status THEN false ELSE true END
       WHERE id = $1
-      RETURNING id, status;
+      RETURNING id, status, product_id;
     `;
 
+    const result = await database.query(sql, params);
+    return result.rows || [];
+  }
+
+  static async updateProduct(params) {
+    const sql = `
+      UPDATE products
+      SET
+        quantity = CASE WHEN $1::boolean THEN quantity - 1 ELSE quantity + 1 END
+      WHERE id = $2::int
+      RETURNING id, quantity;
+    `;
     const result = await database.query(sql, params);
     return result.rows || [];
   }
@@ -49,7 +61,6 @@ class Order {
     const result = await database.query(sql, params);
     return result.rows || [];
   }
-
 }
 
 module.exports = Order;

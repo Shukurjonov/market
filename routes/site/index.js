@@ -38,7 +38,6 @@ const updatePhoneNumber = catchError(async (req, res, next) => {
   })
 });
 
-
 const updateAddress = catchError(async (req, res, next) => {
   const { error, value } = updateAddressSchema.validate(req.body);
   if (error) {

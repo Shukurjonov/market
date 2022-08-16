@@ -10,7 +10,8 @@ class Categories {
         name_uz
       FROM
         categories c
-      WHERE state = true;
+      WHERE state = true
+      ORDER BY id;
     `;
 
     const result = await database.query(sql);
@@ -52,7 +53,7 @@ class Categories {
         updated_at = coalesce($3, updated_at),
         updated_by = coalesce($4, updated_by)
       WHERE id = $5
-      RETURNING id;
+      RETURNING id, name_ru, name_uz, updated_at;
     `;
 
     const result = await database.query(sql, params);
@@ -67,6 +68,47 @@ class Categories {
         updated_at = coalesce($1, updated_at),
         updated_by = coalesce($2, updated_by)
       WHERE id = $3
+      RETURNING id, name_ru, name_uz, updated_at;
+    `;
+
+    const result = await database.query(sql, params);
+    return result.rows || [];
+  }
+
+  static async deleteProduct(params) {
+    const sql = `
+      UPDATE products
+      SET 
+        state = false
+      WHERE category_id = $1
+      RETURNING id;
+    `;
+
+    const result = await database.query(sql, params);
+    return result.rows || [];
+  }
+
+  static async restoreCategory(params) {
+    const sql = `
+      UPDATE categories
+      SET 
+        state = true,
+        updated_at = coalesce($1, updated_at),
+        updated_by = coalesce($2, updated_by)
+      WHERE id = $3
+      RETURNING id, name_ru, name_uz, updated_at;
+    `;
+
+    const result = await database.query(sql, params);
+    return result.rows || [];
+  }
+
+  static async restoreProduct(params) {
+    const sql = `
+      UPDATE products
+      SET 
+        state = true
+      WHERE category_id = $1
       RETURNING id;
     `;
 

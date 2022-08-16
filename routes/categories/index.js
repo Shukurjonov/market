@@ -99,7 +99,7 @@ const updateCategory = catchError(async (req, res, next) => {
     })
   } else {
     return res.status(500).send({
-      message: 'Internal server error'
+      message: 'Category not found'
     })
   }
 })
@@ -121,6 +121,34 @@ const deleteCategory = catchError(async (req, res, next) => {
     })
   }
 
+  console.log(result[0]);
+
+  const products = await Categories.deleteProduct([value.categoryId]);
+  return res.status(200).send({
+    message: 'Category dateleted',
+    data: result
+  })
+});
+
+const restoreCategory = catchError(async (req, res, next) => {
+  const { error, value } = deleteCategorySchema.validate({ ...req.params, updatedAt: new Date(), updateBy: req.user.id });
+  console.log(value)
+  if (error) {
+    return next({
+      status: 400,
+      message: error.details[0].message
+    })
+  }
+  const result = await Categories.restoreCategory([value.updatedAt, value.updateBy, value.categoryId]);
+
+  if (!result.length) {
+    return res.status(404).send({
+      message: 'Category not found'
+    })
+  }
+
+
+  const products = await Categories.restoreProduct([value.categoryId]);
   return res.status(200).send({
     message: 'Category dateleted',
     data: result
@@ -132,5 +160,6 @@ router.get('/:categoryId', getCategoryOne);
 router.post('/', createCategory);
 router.put('/:categoryId', updateCategory);
 router.delete('/:categoryId', deleteCategory);
+router.put('/restore/:categoryId', restoreCategory);
 
 module.exports = router;

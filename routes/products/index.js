@@ -16,6 +16,7 @@ const { catchError } = require('../../utils/helper');
 
 const getProducts = catchError(async (req, res, next) => {
   const result = await Produts.getProducts([req.headers.host]);
+  console.log(result)
   return res.status(200).send({
     message: 'Products retrieved',
     data: result
@@ -48,7 +49,7 @@ const getProductOne = catchError(async (req, res, next) => {
 const getProductStatus = catchError(async (req, res, next) => {
   const result = await Produts.getProductStatus();
   return res.status(200).send({
-    message: 'ProductStatus retrieved',
+    message: 'Product Status retrieved',
     data: result
   })
 });

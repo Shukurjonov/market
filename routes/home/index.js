@@ -90,6 +90,15 @@ const createOrder = catchError(async (req, res, next) => {
       message: error.details[0].message
     })
   }
+  if (value.productId) {
+    let productOne = await Home.getProductOne([req.headers.host, value.productId]);
+    if (productOne.length === 0) {
+      return next({
+        status: 404,
+        message: 'Products not found'
+      })
+    }
+  }
   let result = await Home.createOrder([value.productId, value.name, value.phoneNumber, value.address, value.location]);
 
   return res.status(201).send({
