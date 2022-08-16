@@ -92,6 +92,13 @@ const createOrder = catchError(async (req, res, next) => {
   }
   if (value.productId) {
     let productOne = await Home.getProductOne([req.headers.host, value.productId]);
+    if (productOne[0].status_id === 3) {
+      return res.status(406).send({
+        status: 406,
+        message: 'Product is not available'
+      })
+    }
+
     if (productOne.length === 0) {
       return next({
         status: 404,
