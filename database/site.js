@@ -39,7 +39,7 @@ class Site {
       SET
         address_ru = $1,
         address_uz = $2
-      RETURNING address;
+      RETURNING address_ru, address_uz;
     `;
     const result = await database.query(sql, params);
     return result.rows || [];
@@ -52,7 +52,7 @@ class Site {
       SET
         work_time_ru = $1
         work_time_uz = $2
-      RETURNING work_time;
+      RETURNING work_time_ru, work_time_uz;
     `;
     const result = await database.query(sql, params);
     return result.rows || [];
