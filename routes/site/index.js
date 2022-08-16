@@ -65,7 +65,7 @@ const updateWorkTime = catchError(async (req, res, next) => {
   }
 
   let result = await Site.updateWorkTime([value.workTimeRu, value.workTimeUz]);
-
+  console.log(value)
   return res.status(200).send({
     message: 'Work Time updated successfully',
     data: result
@@ -96,7 +96,7 @@ const updateInstagramLink = catchError(async (req, res, next) => {
       message: error.details[0].message
     })
   }
-  let result = await Site.updateInstagramLink([value.InstagramLink]);
+  let result = await Site.updateInstagramLink([value.instagramLink]);
 
   return res.status(200).send({
     message: 'Instagram link updated successfully',
