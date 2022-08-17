@@ -9,6 +9,7 @@ const {
   getProductOneSchema,
   createProductSchema,
   updateProductSchema,
+  getProductFilterByCategorySchema,
   deleteProductSchema
 } = require('./schema');
 
@@ -49,6 +50,24 @@ const getProductStatus = catchError(async (req, res, next) => {
   const result = await Produts.getProductStatus();
   return res.status(200).send({
     message: 'Product Status retrieved',
+    data: result
+  })
+});
+
+const getProductFilterByCategory = catchError(async (req, res, next) => {
+  const { error, value } = getProductFilterByCategorySchema.validate(req.params);
+
+  if (error) {
+    return next({
+      status: 400,
+      message: error.details[0].message,
+    });
+  }
+
+  const result = await Produts.getProductFilterByCategory([req.headers.host, value.categoryId]);
+
+  return res.status(200).send({
+    message: 'Products list',
     data: result
   })
 });
@@ -168,6 +187,7 @@ const deleteProduct = catchError(async (req, res, next) => {
 router.get('/', getProducts);
 router.get('/:productId', getProductOne);
 router.get('/status/info', getProductStatus);
+router.get('/category/:categoryId', getProductFilterByCategory);
 router.post('/', createProduct);
 router.put('/:productId', updateProduct);
 router.delete('/:productId', deleteProduct);

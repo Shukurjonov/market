@@ -39,4 +39,14 @@ const deleteProductSchema = Joi.object({
   productId: Joi.number().required()
 })
 
-module.exports = { getProductOneSchema, createProductSchema, updateProductSchema, deleteProductSchema };
+const getProductFilterByCategorySchema = Joi.object({
+  categoryId: Joi.number().required()
+})
+
+module.exports = {
+  getProductOneSchema,
+  createProductSchema,
+  updateProductSchema,
+  deleteProductSchema,
+  getProductFilterByCategorySchema
+};
