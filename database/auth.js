@@ -9,7 +9,7 @@ class Auth {
         user_firstname,
         user_lastname,
         username,
-        r.name
+        r.name role
       FROM users u
       LEFT JOIN role r on r.id = u.role_id
       WHERE username = $1::varchar AND user_password = md5(md5($2::text)) AND u.state = true;
