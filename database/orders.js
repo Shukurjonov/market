@@ -8,7 +8,7 @@ class Order {
         name,
         phone_number,
         p.id product_id,
-        CONCAT('https://', $1::VARCHAR, '/', p.image) AS image,
+        CONCAT('http://', $1::VARCHAR, '/', p.image) AS image,
         p.size,
         p.depth,
         coalesce(p.sale_price, p.price) price,
