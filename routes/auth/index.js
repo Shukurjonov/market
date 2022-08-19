@@ -9,9 +9,7 @@ const Auth = require('../../database/auth');
 const router = require('express').Router();
 
 const login = catchError(async (req, res, next) => {
-
   const { error, value } = loginSchema.validate(req.body);
-  console.log(value);
   if (error) {
     return next({
       status: 400,

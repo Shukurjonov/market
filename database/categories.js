@@ -47,7 +47,7 @@ class Categories {
   static async updateCategory(params) {
     const sql = `
       UPDATE categories
-      SET 
+      SET
         name_ru = coalesce($1, name_ru),
         name_uz = coalesce($2, name_uz),
         updated_at = coalesce($3, updated_at),
