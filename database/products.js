@@ -40,7 +40,7 @@ class Products {
     const sql = `
     SELECT 
       p.id,
-      c.id,
+      c.id category_id,
       c.name_ru category_name_ru,
       c.name_uz category_name_uz,
       CONCAT('https://', $1::VARCHAR, '/', p.image) AS image,
