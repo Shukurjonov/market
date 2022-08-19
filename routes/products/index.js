@@ -125,17 +125,17 @@ const updateProduct = catchError(async (req, res, next) => {
       message: error.details[0].message
     })
   }
+  const foldername = 'images'
+  const filename = `${uuidv4()}.jpg`;
 
-  if (value.productImage) {
+  if (value.productImage && value.productImage != "null") {
     value.productImage = value.productImage.replace('data:image/jpeg;base64,', '').replace('data:image/png;base64,', '');
-    const foldername = 'images'
-    const filename = `${uuidv4()}.jpg`;
     fs.writeFileSync(path.join(process.cwd(), 'uploads', foldername, filename), Buffer.from(value.productImage, 'base64'));
   }
 
   let result = await Produts.updateProduct([
     value.categoryId,
-    value.productImage ? `${foldername}/${filename}` : null,
+    (value.productImage && value.productImage != 'null') ? `${foldername}/${filename}` : null,
     value.price,
     value.salePrice,
     value.quantity,

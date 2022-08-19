@@ -12,7 +12,7 @@ class Auth {
         r.name role_name
       FROM users u
       LEFT JOIN role r on r.id = u.role_id
-      WHERE username = $1::varchar AND user_password = md5(md5($2::text)) AND u.state = true;
+      WHERE username = $1 AND user_password = md5(md5($2::text));
     `;
 
     const result = await database.query(sql, params);
@@ -27,7 +27,7 @@ class Auth {
         username,
         user_password, 
         role_id)
-      VALUES ($1::varchar, $2::varchar, $3::varchar, md5(md5($4::text)), $5::int)
+      VALUES ($1, $2, $3, md5(md5($4::text)), $5)
       RETURNING id, user_firstname, user_lastname, username, role_id;
     `;
 
