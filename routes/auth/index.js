@@ -16,9 +16,7 @@ const login = catchError(async (req, res, next) => {
       message: error.details[0].message,
     })
   }
-  console.log(value);
   const result = await Auth.login([value.username, value.password]);
-  console.log(result);
   if (!result.length) {
     return res.status(404).send({
       message: 'Username or password is incorrect',
